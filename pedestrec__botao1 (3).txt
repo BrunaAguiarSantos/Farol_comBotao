@@ -1,0 +1,91 @@
+//peguei o código do gustavo :))
+
+
+// C++ code
+//
+const byte PedVermelho = 3;
+const byte PedVerde = 6;
+
+const byte CarVermelho = 9;
+const byte CarVerde = 4;
+const byte CarAmarelo = 7;
+
+
+const byte buttonPin = 2;
+
+boolean state = false;
+
+/*==================================================
+FUNÇÃO SETUP()
+====================================================*/
+void setup()
+{
+  //funções dos leds e do botão
+  pinMode(CarVermelho,OUTPUT);
+  pinMode(CarAmarelo,OUTPUT);
+  pinMode(CarVerde,OUTPUT);
+  
+  pinMode(PedVermelho,OUTPUT);
+  pinMode(PedVerde,OUTPUT);
+  
+  pinMode(buttonPin, INPUT);
+ attachInterrupt(digitalPinToInterrupt(buttonPin),blink1, CHANGE);
+  
+}
+/*=================================================
+FUNÇÃO LOOP()
+==================================================*/
+void loop()
+{
+  
+ //O farol dos carros precisa estar verde
+  
+  digitalWrite(CarVermelho, LOW);
+  digitalWrite(CarAmarelo, LOW);
+  digitalWrite(CarVerde, HIGH);
+  
+  digitalWrite(PedVerde, LOW);
+  digitalWrite(PedVermelho, HIGH);
+  
+  for(int i = 0; state == false && i < 3000; i+=100){
+  delay(300);
+  }
+   
+  digitalWrite(CarVermelho, LOW);
+  digitalWrite(CarAmarelo, HIGH);
+  digitalWrite(CarVerde, LOW);
+    delay(2000);
+  
+  digitalWrite(CarVermelho, HIGH);
+  digitalWrite(CarAmarelo, LOW);
+  digitalWrite(CarVerde, LOW);
+  
+  digitalWrite(PedVerde, HIGH);
+  digitalWrite(PedVermelho, LOW);
+      delay(3000);
+
+  digitalWrite(PedVerde, LOW);
+    delay(1000);
+
+  
+  //PedVermelho piscando
+  for(int i=0;i<=12;i++){
+  digitalWrite(PedVermelho, !(digitalRead(PedVermelho)));
+  delay(250);
+  }
+  
+  //se o estado do botão for igual a true
+  if(state == true){
+  
+    state = false;
+  }
+  }
+  
+
+/*=================================================
+FUNÇÃO BLINK1()
+==================================================*/
+void blink1()
+{
+state = true;
+}
